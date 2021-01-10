@@ -26,12 +26,6 @@ namespace Web.Controllers
         [HttpGet]
         public async Task<GetSystemConfigurationsResponse> Get()
         {
-            var token = HttpContext.Request.Cookies["access_token"];
-            var authenticated = HttpContext.Session.Get<bool>("authenticated");
-            if(authenticated == false)
-            {
-                HttpContext.Session.Set("authenticated", true);
-            }
             return await _mediator.Send(new GetSystemConfigurationsQuery());
         }
     }

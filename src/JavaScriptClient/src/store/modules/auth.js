@@ -16,9 +16,9 @@ const getters = {
 const actions = {
     getUser({ commit })  {
         auth.getUser().then(user => {
-            console.log(user)
             commit('setUser', user)
         })
+        .catch(err => console.error(err))
     }
 }
 

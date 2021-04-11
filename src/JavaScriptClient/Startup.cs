@@ -24,7 +24,7 @@ namespace JavaScriptClient
             {
                 if (env.IsDevelopment())
                 {
-                    builder.UseProxyToSpaDevelopmentServer("http://localhost:8080");
+                    builder.UseProxyToSpaDevelopmentServer("https://localhost:8080");
                 }
             });
         }

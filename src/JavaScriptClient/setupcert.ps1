@@ -1,0 +1,13 @@
+$webDir = "PATH_TO_CERT_LOCATION";
+
+Write-Host "Creating cert directly into CurrentUser\My store (due to limitation that certs cannot be created directly in root store)"
+$cert = New-SelfSignedCertificate -CertStoreLocation Cert:\CurrentUser\My -DnsName localhost -NotAfter ([DateTime]::Now.AddYears(10))
+
+$certFile = Join-Path $webdir "localhost.pfx"
+Write-Host "Exporting certificate to $certFile -- this is used by the webpack-dev-server directly with a hardcoded password"
+$password = ConvertTo-SecureString -String "password" -Force -AsPlainText
+Export-PfxCertificate -Cert $cert -FilePath $certFile -Password $password
+
+Write-Host "Importing $certFile to CurrentUser\Root store for immediate system wide trust"
+Write-Host "---------- THERE MAY BE A WINDOWS PROMPT WHICH MUST BE ACCEPTED FOR THIS NOW ------------" -ForegroundColor Yellow
+Import-PfxCertificate -FilePath $certFile -CertStoreLocation Cert:\LocalMachine\Root -Password $password

@@ -13,7 +13,7 @@ namespace Infrastructure.Configurations
         {
             config.ToTable("SystemConfiguration");
 
-            config.HasKey(o => o.ID);
+            config.HasKey(o => o.Id);
         }
     }
 }

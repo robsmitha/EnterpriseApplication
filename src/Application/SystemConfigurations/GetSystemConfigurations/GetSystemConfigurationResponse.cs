@@ -7,8 +7,8 @@ namespace Application.SystemConfigurations.GetSystemConfigurations
 {
     public class GetSystemConfigurationsResponse
     {
-        public List<SystemConfigurationModel> Configurations { get; set; }
-        public GetSystemConfigurationsResponse(List<SystemConfigurationModel> configurations)
+        public List<SystemConfigurationDto> Configurations { get; set; }
+        public GetSystemConfigurationsResponse(List<SystemConfigurationDto> configurations)
         {
             Configurations = configurations;
         }

@@ -10,11 +10,11 @@ namespace Application.Common.Behaviors
        : IRequestPreProcessor<TRequest>
     {
         private readonly ILogger _logger;
-        private readonly IAppUserService _user;
+        private readonly ICurrentUserService _user;
 
         public LoggingBehavior(
             ILogger<TRequest> logger,
-            IAppUserService user)
+            ICurrentUserService user)
         {
             _logger = logger;
             _user = user;
@@ -25,10 +25,7 @@ namespace Application.Common.Behaviors
             CancellationToken cancellationToken)
         {
             var requestName = typeof(TRequest).Name;
-            var claimId = _user.ClaimID;
-            var identifier = _user.UniqueIdentifier;
-
-            _logger.LogInformation($"Application Request: {requestName} {claimId} {identifier} {request}");
+            _logger.LogInformation($"Application Request: {requestName} {_user.UserId} {request}");
             await Task.FromResult(0);
         }
     }

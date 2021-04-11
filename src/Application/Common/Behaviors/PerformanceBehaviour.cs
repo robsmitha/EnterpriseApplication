@@ -12,11 +12,11 @@ namespace Application.Common.Behaviors
     {
         private readonly Stopwatch _timer;
         private readonly ILogger<TRequest> _logger;
-        private readonly IAppUserService _user;
+        private readonly ICurrentUserService _user;
 
         public PerformanceBehaviour(
             ILogger<TRequest> logger,
-            IAppUserService user)
+            ICurrentUserService user)
         {
             _timer = new Stopwatch();
 
@@ -40,12 +40,10 @@ namespace Application.Common.Behaviors
             if (elapsedMilliseconds > 500)
             {
                 var requestName = typeof(TRequest).Name;
-                var identifier = _user.UniqueIdentifier;
-                var claimId = _user.ClaimID;
 
                 _logger.LogWarning(
                     $"Application Long Running Request: {requestName} " +
-                    $"({elapsedMilliseconds} milliseconds) {claimId} - {identifier}" +
+                    $"({elapsedMilliseconds} milliseconds) {_user.UserId}" +
                     $"{request}");
             }
             await Task.FromResult(0);

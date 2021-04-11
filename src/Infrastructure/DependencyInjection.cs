@@ -4,9 +4,6 @@ using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Infrastructure
 {
@@ -17,13 +14,13 @@ namespace Infrastructure
             IConfiguration configuration)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
-                        b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
-
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
+            
+            //services.AddTransient<IDateTime, DateTimeService>();
 
-            services.AddTransient<IDateTime, DateTimeService>();
-            services.AddScoped<IIdentityService, IdentityService>();
+            //services.AddScoped<IDomainEventService, DomainEventService>();
+            //services.AddScoped<IIdentityService, IdentityService>();
 
             return services;
         }

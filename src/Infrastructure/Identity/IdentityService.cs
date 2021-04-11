@@ -1,11 +1,13 @@
 ﻿using Application.Common.Interfaces;
+using Application.Common.Models;
 using Domain.Entities;
 using Infrastructure.Settings;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -17,36 +19,87 @@ namespace Infrastructure.Identity
 {
     public class IdentityService : IIdentityService
     {
-        private readonly IApplicationDbContext _context;
-        private readonly IAppUserService _user;
-        private AppSettings _appSettings;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IUserClaimsPrincipalFactory<ApplicationUser> _userClaimsPrincipalFactory;
+        private readonly IAuthorizationService _authorizationService;
+        private ICurrentUserService _user;
 
-        public IdentityService(IOptions<AppSettings> appSettings,
-            IAppUserService user,
-            IApplicationDbContext context)
+        public IdentityService(
+            UserManager<ApplicationUser> userManager,
+            IUserClaimsPrincipalFactory<ApplicationUser> userClaimsPrincipalFactory,
+            IAuthorizationService authorizationService,
+            ICurrentUserService user)
         {
-            _appSettings = appSettings.Value;
-            _context = context;
+            _userManager = userManager;
+            _userClaimsPrincipalFactory = userClaimsPrincipalFactory;
+            _authorizationService = authorizationService;
             _user = user;
         }
 
-        public async Task<IAppUser> AuthenticateToken(string token)
+        public async Task<string> GetUserNameAsync(string userId)
         {
-            var accessToken = _user.GetAccessToken(token);
-            var authenticated = _user.ClaimID != null;
-            _user.SetIdentity(accessToken);
-            return await Task.FromResult(new AppUser(authenticated));
-        }
-        public async Task<IAppUser> RefreshToken(IAccessToken token)
-        {
-            //TODO: Call refresh
-            return await Task.FromResult(new AppUser(true));
+            var user = await _userManager.Users.FirstAsync(u => u.Id == userId);
+
+            return user.UserName;
         }
 
-        public void ClearAuthentication()
+        public async Task<(Result Result, string UserId)> CreateUserAsync(string userName, string password)
         {
-            //TODO: Call logout
-            _user.SetIdentity();
+            var user = new ApplicationUser
+            {
+                UserName = userName,
+                Email = userName,
+            };
+
+            var result = await _userManager.CreateAsync(user, password);
+
+            return (result.ToApplicationResult(), user.Id);
+        }
+
+        public async Task<bool> IsInRoleAsync(string userId, string role)
+        {
+            var user = _userManager.Users.SingleOrDefault(u => u.Id == userId);
+
+            return await _userManager.IsInRoleAsync(user, role);
+        }
+
+        public async Task<bool> AuthorizeAsync(string userId, string policyName)
+        {
+            var user = _userManager.Users.SingleOrDefault(u => u.Id == userId);
+
+            var principal = await _userClaimsPrincipalFactory.CreateAsync(user);
+
+            var result = await _authorizationService.AuthorizeAsync(principal, policyName);
+
+            return result.Succeeded;
+        }
+
+        public async Task<Result> DeleteUserAsync(string userId)
+        {
+            var user = _userManager.Users.SingleOrDefault(u => u.Id == userId);
+
+            if (user != null)
+            {
+                return await DeleteUserAsync(user);
+            }
+
+            return Result.Success();
+        }
+
+        public async Task<Result> DeleteUserAsync(ApplicationUser user)
+        {
+            var result = await _userManager.DeleteAsync(user);
+
+            return result.ToApplicationResult();
+        }
+
+        public async Task<Result> CreateUserAsync(string username, string email, string password)
+        {
+            var user = new ApplicationUser { UserName = username, Email = email };
+
+            var result = await _userManager.CreateAsync(user, password);
+            
+            return result.ToApplicationResult();
         }
     }
 }

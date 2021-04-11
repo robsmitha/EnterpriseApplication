@@ -1,0 +1,7 @@
+﻿appsettings.json
+appsettings.Development.json
+
+/Seed
+tempkey.jwk
+AspIdUsers.db
+updateUI.ps1

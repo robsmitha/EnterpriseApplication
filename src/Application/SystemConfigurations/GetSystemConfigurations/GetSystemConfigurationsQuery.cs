@@ -30,7 +30,7 @@ namespace Application.SystemConfigurations.GetSystemConfigurations
             }
             public async Task<GetSystemConfigurationsResponse> Handle(GetSystemConfigurationsQuery request, CancellationToken cancellationToken)
             {
-                var configurations = _mapper.Map<List<SystemConfigurationModel>>(await _context.SystemConfigurations.AsNoTracking().ToListAsync());
+                var configurations = _mapper.Map<List<SystemConfigurationDto>>(await _context.SystemConfigurations.AsNoTracking().ToListAsync());
                 return new GetSystemConfigurationsResponse(configurations);
             }
         }

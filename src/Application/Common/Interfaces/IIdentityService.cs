@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Application.Common.Models;
+using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,21 +10,16 @@ namespace Application.Common.Interfaces
 {
     public interface IIdentityService
     {
-        /// <summary>
-        /// Clears token/session authentication values
-        /// </summary>
-        void ClearAuthentication();
+        Task<string> GetUserNameAsync(string userId);
 
-        /// <summary>
-        /// Set authentication values
-        /// </summary>
-        Task<IAppUser> AuthenticateToken(string token);
+        Task<bool> IsInRoleAsync(string userId, string role);
 
-        /// <summary>
-        /// Refreshes JWT token cookie when user visits site
-        /// </summary>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        Task<IAppUser> RefreshToken(IAccessToken token);
+        Task<bool> AuthorizeAsync(string userId, string policyName);
+
+        Task<(Result Result, string UserId)> CreateUserAsync(string userName, string password);
+
+        Task<Result> DeleteUserAsync(string userId);
+
+        Task<Result> CreateUserAsync(string username, string email, string password);
     }
 }

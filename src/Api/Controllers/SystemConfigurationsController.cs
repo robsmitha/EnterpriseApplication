@@ -3,20 +3,16 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Api.Controllers
 {
-    [ApiController]
     [Route("[controller]")]
-    public class SystemConfigurationsController : ControllerBase
+    [Authorize]
+    public class SystemConfigurationsController : Controller
     {
         private readonly IMediator _mediator;
         private readonly ILogger<SystemConfigurationsController> _logger;
-
         public SystemConfigurationsController(
             ILogger<SystemConfigurationsController> logger,
             IMediator mediator)

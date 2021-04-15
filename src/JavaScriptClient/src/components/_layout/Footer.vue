@@ -55,12 +55,6 @@ export default {
       isHomePage() {
           return this.$route.path === '/'
       },
-    },
-    created(){
-      //console.log(this.client)
-    },
-    updated(){
-      //console.log(this.client)
     }
 }
 </script>

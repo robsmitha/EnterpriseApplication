@@ -5,7 +5,6 @@ import VueRouter from 'vue-router'
 import Home from './../components/home/Home'
 
 import OdicCallback from './../components/oidc/OidcCallback'
-import Logout from './../components/oidc/Logout'
 
 import goTo from 'vuetify/es5/services/goto'
 
@@ -14,8 +13,7 @@ Vue.use(VueRouter);
 
 const routes = [
     { path: '/', component: Home },
-    { path: '/oidc-callback', component: OdicCallback },
-    { path: '/logout', component: Logout }
+    { path: '/oidc-callback', component: OdicCallback }
   ]
   
 export default new VueRouter({

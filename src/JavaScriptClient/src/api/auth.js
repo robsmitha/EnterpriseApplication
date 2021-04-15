@@ -18,15 +18,15 @@ export default {
 }
 
 function getUser(){
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve) {
       mgr.getUser().then(function (user) {
         if (user) {
             log("User logged in", user.profile)
-            resolve( user)
+            resolve(user)
         }
         else {
             log("User not logged in");
-            reject("User not logged in")
+            resolve()
         }
       })
     })

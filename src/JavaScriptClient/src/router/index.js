@@ -12,7 +12,7 @@ import goTo from 'vuetify/es5/services/goto'
 Vue.use(VueRouter);
 
 const routes = [
-    { path: '/', component: Home },
+    { path: '/', component: Home, alias: '/home'},
     { path: '/oidc-callback', component: OdicCallback }
   ]
   

@@ -1,4 +1,4 @@
-﻿using Application.SystemConfigurations.GetSystemConfigurations;
+﻿using Application.Queries.SystemConfigurations.GetSystemConfigurations;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +23,7 @@ namespace Api.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<GetSystemConfigurationsResponse> Get()
+        public async Task<GetSystemConfigurationsQuery.Response> Get()
         {
             return await _mediator.Send(new GetSystemConfigurationsQuery());
         }

@@ -1,4 +1,4 @@
-$webDir = "PATH_TO_CERT_LOCATION";
+$webDir = "C:\Users\robsm\Source\Repos\MerchantTaxApp\src\JavaScriptClient\";
 
 Write-Host "Creating cert directly into CurrentUser\My store (due to limitation that certs cannot be created directly in root store)"
 $cert = New-SelfSignedCertificate -CertStoreLocation Cert:\CurrentUser\My -DnsName localhost -NotAfter ([DateTime]::Now.AddYears(10))

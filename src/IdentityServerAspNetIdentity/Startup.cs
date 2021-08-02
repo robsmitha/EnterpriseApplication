@@ -32,7 +32,7 @@ namespace IdentityServerAspNetIdentity
             services.AddControllersWithViews();
             services.AddInfrastructure(Configuration);
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 

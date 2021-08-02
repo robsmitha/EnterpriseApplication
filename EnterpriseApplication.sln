@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "src\Api\Api.csproj",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServerAspNetIdentity", "src\IdentityServerAspNetIdentity\IdentityServerAspNetIdentity.csproj", "{EF68FF87-2341-4059-AFA6-0C1967BAC80D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoreApp", "src\StoreApp\StoreApp.csproj", "{072D7024-0400-4BFF-85D3-237C0A2F5FD8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,10 @@ Global
 		{EF68FF87-2341-4059-AFA6-0C1967BAC80D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF68FF87-2341-4059-AFA6-0C1967BAC80D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF68FF87-2341-4059-AFA6-0C1967BAC80D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{072D7024-0400-4BFF-85D3-237C0A2F5FD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{072D7024-0400-4BFF-85D3-237C0A2F5FD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{072D7024-0400-4BFF-85D3-237C0A2F5FD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{072D7024-0400-4BFF-85D3-237C0A2F5FD8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -88,6 +94,7 @@ Global
 		{184EC53B-842E-4D89-820B-14EF79B1DB86} = {F6854F94-6512-4FD7-83B2-D31BC82A4BC5}
 		{877AD857-CC9D-43C8-A0C3-2E6D9C0DDA2A} = {F6854F94-6512-4FD7-83B2-D31BC82A4BC5}
 		{EF68FF87-2341-4059-AFA6-0C1967BAC80D} = {F6854F94-6512-4FD7-83B2-D31BC82A4BC5}
+		{072D7024-0400-4BFF-85D3-237C0A2F5FD8} = {F6854F94-6512-4FD7-83B2-D31BC82A4BC5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4F0D0DBD-381A-40F5-8378-BD320658904F}

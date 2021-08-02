@@ -18,6 +18,13 @@ namespace Api.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public string UserId => _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+        public int UserId
+        {
+            get
+            {
+                var id = _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+                return id != null ? Convert.ToInt32(id) : 0;
+            }
+        }
     }
 }

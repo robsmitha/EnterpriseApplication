@@ -28,7 +28,7 @@ namespace IdentityServerAspNetIdentity
             services.AddDbContext<ApplicationDbContext>(options =>
                options.UseSqlServer(connectionString));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -112,9 +112,9 @@ namespace IdentityServerAspNetIdentity
             context.Database.Migrate();
 
             var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
 
-            var administratorRole = new IdentityRole("Administrator");
+            var administratorRole = new ApplicationRole("Administrator");
             if (roleManager.Roles.All(r => r.Name != administratorRole.Name))
             {
                 await roleManager.CreateAsync(administratorRole);
@@ -131,7 +131,7 @@ namespace IdentityServerAspNetIdentity
                 }
 
                 result = await userManager.AddClaimsAsync(administrator, new Claim[]{
-                                new Claim(JwtClaimTypes.Id, administrator.Id),
+                                new Claim(JwtClaimTypes.Id, administrator.Id.ToString()),
                                 new Claim(JwtClaimTypes.Name, "Admin"),
                                 new Claim(JwtClaimTypes.GivenName, "Admin"),
                                 new Claim(JwtClaimTypes.FamilyName, "Admin"),
